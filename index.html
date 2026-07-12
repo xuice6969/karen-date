@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ff5f83" />
+  <title>Karen 💗</title>
+  <style>
+    :root {
+      --pink: #ff5f83;
+      --pink-dark: #ef3e68;
+      --pink-light: #ffe3ea;
+      --ink: #39272d;
+      --white: #fff;
+      --shadow: 0 24px 70px rgba(122, 35, 62, .20);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,.95), transparent 26%),
+        radial-gradient(circle at 90% 8%, rgba(255,255,255,.8), transparent 25%),
+        linear-gradient(145deg, #ffdbe4, #fff 48%, #ffd5df);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 24px 14px;
+    }
+
+    .phone {
+      position: relative;
+      width: min(430px, 100%);
+      min-height: min(860px, calc(100dvh - 28px));
+      background: rgba(255,255,255,.94);
+      border: 8px solid #151316;
+      border-radius: 44px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 20;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 116px;
+      height: 28px;
+      background: #151316;
+      border-radius: 999px;
+    }
+
+    .screen {
+      position: relative;
+      min-height: inherit;
+      padding: 62px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .screen.hidden {
+      display: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 2px;
+      color: var(--pink-dark);
+      font-size: clamp(2rem, 10vw, 3.35rem);
+      line-height: 1;
+      letter-spacing: -.04em;
+      text-align: center;
+    }
+
+    .question, .answer {
+      margin: 14px 0 20px;
+      color: var(--pink-dark);
+      text-align: center;
+      font-size: clamp(1.2rem, 5.2vw, 1.65rem);
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .photo-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .photo-grid.accepted {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 8px;
+    }
+
+    .photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 22px;
+      background: var(--pink-light);
+      box-shadow: 0 9px 22px rgba(120, 42, 66, .12);
+    }
+
+    .buttons-area {
+      position: relative;
+      width: 100%;
+      min-height: 150px;
+      margin-top: 18px;
+    }
+
+    button {
+      font: inherit;
+      font-weight: 800;
+      border: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .choice {
+      position: absolute;
+      top: 20px;
+      width: 44%;
+      height: 66px;
+      border-radius: 22px;
+      font-size: 1.42rem;
+      box-shadow: 0 10px 24px rgba(239, 62, 104, .25);
+      transition: transform .14s ease, left .18s ease, top .18s ease;
+    }
+
+    #yesBtn {
+      left: 2%;
+      color: white;
+      background: linear-gradient(135deg, #ff7795, var(--pink));
+    }
+
+    #noBtn {
+      left: 54%;
+      color: white;
+      background: linear-gradient(135deg, #ff7795, var(--pink));
+    }
+
+    #yesBtn:active { transform: scale(.96); }
+
+    .hint {
+      margin-top: auto;
+      text-align: center;
+      color: var(--pink-dark);
+      font-size: .92rem;
+      opacity: .85;
+    }
+
+    .heart-stage {
+      position: relative;
+      width: 180px;
+      height: 170px;
+      margin: 20px 0 4px;
+      display: grid;
+      place-items: center;
+    }
+
+    .big-heart {
+      font-size: 8rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 24px rgba(255,95,131,.55));
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.09); }
+    }
+
+    .accepted-note {
+      color: var(--pink-dark);
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-align: center;
+      margin: 0;
+    }
+
+    .floating-heart {
+      position: fixed;
+      z-index: 0;
+      bottom: -40px;
+      pointer-events: none;
+      opacity: .75;
+      animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-115vh) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      z-index: 99;
+      width: 10px;
+      height: 15px;
+      top: -18px;
+      pointer-events: none;
+      animation: confettiFall 2.4s ease-in forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translate3d(var(--drift), 110vh, 0) rotate(760deg);
+        opacity: .15;
+      }
+    }
+
+    @media (max-height: 760px) {
+      .phone { min-height: calc(100dvh - 18px); }
+      .screen { padding-top: 52px; }
+      .photo { border-radius: 17px; }
+      .choice { height: 58px; }
+      .buttons-area { min-height: 120px; }
+      .heart-stage { height: 120px; margin-top: 8px; }
+      .big-heart { font-size: 6rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone" aria-label="Date invitation for Karen">
+    <section id="askScreen" class="screen">
+      <h1 class="eyebrow">Karen, ♡</h1>
+      <p class="question">may you go on a date with me?:)</p>
+
+      <div class="photo-grid">
+        <img class="photo" src="assets/asking-1.jpeg" alt="A happy cat and dog" />
+        <img class="photo" src="assets/asking-2.jpeg" alt="A cat holding a rose" />
+        <img class="photo" src="assets/asking-3.jpeg" alt="A playful smiling emoji" />
+        <img class="photo" src="assets/asking-4.jpeg" alt="A playful bee character" />
+      </div>
+
+      <div id="buttonsArea" class="buttons-area">
+        <button id="yesBtn" class="choice" type="button">Yes</button>
+        <button id="noBtn" class="choice" type="button" aria-label="No, playful moving button">No</button>
+      </div>
+
+      <p class="hint">♡ take your time… no rush cutie</p>
+    </section>
+
+    <section id="yesScreen" class="screen hidden">
+      <h1 class="eyebrow">GREAT 🫶🏻</h1>
+      <p class="answer">I’ll see you at Fast Eddies;<br />Saturday at 7PM:))))))</p>
+
+      <div class="photo-grid accepted">
+        <img class="photo" src="assets/accepted-1.png" alt="A funny dog wearing a propeller hat" />
+        <img class="photo" src="assets/accepted-2.jpeg" alt="A happy dog wearing a colorful hat" />
+      </div>
+
+      <div class="heart-stage" aria-hidden="true">
+        <div class="big-heart">💗</div>
+      </div>
+      <p class="accepted-note">can’t wait hehe ♡</p>
+    </section>
+  </main>
+
+  <script>
+    const askScreen = document.getElementById("askScreen");
+    const yesScreen = document.getElementById("yesScreen");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const buttonsArea = document.getElementById("buttonsArea");
+
+    let lastMove = 0;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function moveNoButton(pointerX, pointerY) {
+      const now = Date.now();
+      if (now - lastMove < 120) return;
+      lastMove = now;
+
+      const area = buttonsArea.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+      const maxLeft = area.width - btn.width;
+      const maxTop = area.height - btn.height;
+
+      const btnCenterX = btn.left + btn.width / 2;
+      const btnCenterY = btn.top + btn.height / 2;
+      const dx = btnCenterX - pointerX;
+      const dy = btnCenterY - pointerY;
+      const length = Math.hypot(dx, dy) || 1;
+
+      const escapeDistance = 135;
+      let nextLeft = (btn.left - area.left) + (dx / length) * escapeDistance;
+      let nextTop = (btn.top - area.top) + (dy / length) * escapeDistance;
+
+      // Add a little randomness so it never gets trapped in one predictable spot.
+      nextLeft += (Math.random() - .5) * 70;
+      nextTop += (Math.random() - .5) * 44;
+
+      nextLeft = clamp(nextLeft, 0, maxLeft);
+      nextTop = clamp(nextTop, 0, maxTop);
+
+      // If it barely moved because it hit an edge, jump to another safe position.
+      if (Math.abs(nextLeft - (btn.left - area.left)) < 25 &&
+          Math.abs(nextTop - (btn.top - area.top)) < 25) {
+        nextLeft = Math.random() * maxLeft;
+        nextTop = Math.random() * maxTop;
+      }
+
+      noBtn.style.left = `${nextLeft}px`;
+      noBtn.style.top = `${nextTop}px`;
+    }
+
+    function checkPointer(event) {
+      const rect = noBtn.getBoundingClientRect();
+      const nearestX = clamp(event.clientX, rect.left, rect.right);
+      const nearestY = clamp(event.clientY, rect.top, rect.bottom);
+      const distance = Math.hypot(event.clientX - nearestX, event.clientY - nearestY);
+
+      if (distance < 85) {
+        moveNoButton(event.clientX, event.clientY);
+      }
+    }
+
+    document.addEventListener("pointermove", checkPointer, { passive: true });
+
+    noBtn.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      moveNoButton(event.clientX, event.clientY);
+    });
+
+    noBtn.addEventListener("click", (event) => {
+      event.preventDefault(); // The No button intentionally does nothing.
+    });
+
+    function launchConfetti() {
+      const pieces = 85;
+      for (let i = 0; i < pieces; i++) {
+        const piece = document.createElement("span");
+        piece.className = "confetti";
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.background = ["#ff5f83", "#ffd166", "#ef476f", "#ffffff", "#f8a5c2"][Math.floor(Math.random() * 5)];
+        piece.style.setProperty("--drift", `${(Math.random() - .5) * 220}px`);
+        piece.style.animationDelay = `${Math.random() * .55}s`;
+        piece.style.transform = `rotate(${Math.random() * 180}deg)`;
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3200);
+      }
+    }
+
+    yesBtn.addEventListener("click", () => {
+      askScreen.classList.add("hidden");
+      yesScreen.classList.remove("hidden");
+      launchConfetti();
+    });
+
+    function createFloatingHeart() {
+      const heart = document.createElement("span");
+      heart.className = "floating-heart";
+      heart.textContent = Math.random() > .25 ? "♡" : "♥";
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.fontSize = `${14 + Math.random() * 24}px`;
+      heart.style.color = Math.random() > .5 ? "#ff5f83" : "#ff9bb0";
+      heart.style.animationDuration = `${6 + Math.random() * 6}s`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 12500);
+    }
+
+    setInterval(createFloatingHeart, 480);
+    for (let i = 0; i < 9; i++) setTimeout(createFloatingHeart, i * 180);
+  </script>
+</body>
+</html>
